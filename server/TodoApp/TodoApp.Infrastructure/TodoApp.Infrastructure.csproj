@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityFramework\Context.cs" />
+    <Compile Include="InMemory\Context.cs" />
+    <Compile Include="InMemory\Repositories\BaseRepository.cs" />
+    <Compile Include="InMemory\Repositories\UserReadOnlyRepository.cs" />
+    <Compile Include="InMemory\Repositories\TaskReadOnlyRepository.cs" />
+    <Compile Include="InMemory\Repositories\TaskWriteOnlyRepository.cs" />
+    <Compile Include="InMemory\Repositories\UserWriteOnlyRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TodoApp.Application\TodoApp.Application.csproj">
+      <Project>{5D556A36-0BA6-45B1-A5E3-487563C5E339}</Project>
+      <Name>TodoApp.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TodoApp.Domain\TodoApp.Domain.csproj">
       <Project>{E6679EFA-7D06-4D36-883C-BF2734FBE045}</Project>
       <Name>TodoApp.Domain</Name>

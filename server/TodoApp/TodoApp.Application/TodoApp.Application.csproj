@@ -42,12 +42,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationException.cs" />
+    <Compile Include="CommonInterfaces\IListable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TaskRepository\ITaskReadOnlyRepository.cs" />
+    <Compile Include="Repositories\TaskRepository\ITaskWriteOnlyRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserReadOnlyRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserWriteOnlyRepository.cs" />
+    <Compile Include="UseCases\Task\TaskInput.cs" />
+    <Compile Include="UseCases\Task\ITaskUseCase.cs" />
+    <Compile Include="UseCases\Task\TaskOutput.cs" />
+    <Compile Include="UseCases\Task\TaskUseCase.cs" />
+    <Compile Include="UseCases\User\IUserUseCase.cs" />
+    <Compile Include="UseCases\User\UserInput.cs" />
+    <Compile Include="UseCases\User\UserOutput.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="UseCases\" />
+    <ProjectReference Include="..\TodoApp.Domain\TodoApp.Domain.csproj">
+      <Project>{e6679efa-7d06-4d36-883c-bf2734fbe045}</Project>
+      <Name>TodoApp.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
