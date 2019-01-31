@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web.Http;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
+//using TodoApp.Application.CommonInterfaces;
+using TodoApp.Application.UseCases.Task;
 using TodoApp.Infrastructure.InMemory;
 
 [assembly: OwinStartup(typeof(TodoApp.WebApi.Startup))]
@@ -21,11 +23,13 @@ namespace TodoApp.WebApi
 
             var container = new Container();
 
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+
             var applicationAssembly = typeof(TodoApp.Application.ApplicationException).Assembly;
 
             var registrations =
                 from type in applicationAssembly.GetExportedTypes()
-                where type.GetInterfaces().Any()
+                where type.GetInterfaces().Any() && !type.Name.Contains("Exception")
                 select new { Service = type.GetInterfaces().Single(), Implementation = type };
 
             foreach (var reg in registrations)

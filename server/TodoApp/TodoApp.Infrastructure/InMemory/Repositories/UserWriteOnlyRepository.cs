@@ -6,8 +6,15 @@ using TodoApp.Domain.User;
 
 namespace TodoApp.Infrastructure.InMemory.Repositories
 {
-    public class UserWriteOnlyRepository : BaseRepository, IUserWriteOnlyRepository
+    public class UserWriteOnlyRepository : IUserWriteOnlyRepository
     {
+        private readonly Context _context;
+
+        public UserWriteOnlyRepository(Context context)
+        {
+            _context = context;
+        }
+
         public Task<Guid> CreateUser(User user)
         {
             if (_context.Users.Any(w => w.Name.Equals(user.Name)))

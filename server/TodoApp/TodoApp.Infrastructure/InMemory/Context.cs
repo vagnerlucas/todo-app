@@ -9,12 +9,10 @@ namespace TodoApp.Infrastructure.InMemory
     public class Context
     {
         public ICollection<User> Users { get; set; }
-        public ICollection<Task> Tasks { get; set; }
 
         public Context()
         {
             Users = new Collection<User>();
-            Tasks = new Collection<Task>();
         }
     }
 }

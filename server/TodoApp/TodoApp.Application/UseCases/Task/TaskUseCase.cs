@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TodoApp.Application.Repositories.TaskRepository;
 
@@ -18,39 +17,34 @@ namespace TodoApp.Application.UseCases.Task
             _taskWriteOnlyRepository = taskWriteOnlyRepository;
         }
 
-        public async Task<ICollection<TaskOutput>> ListAll()
+        public async Task<ICollection<TaskOutput>> ListAll(Guid userId)
         {
-            var data = await _taskReadOnlyRepository.ListAll();
+            var data = await _taskReadOnlyRepository.ListAll(userId);
             return data.Select(task => new TaskOutput(task)).ToList();
         }
 
-        public Task<bool> Create(TaskInput task)
+        public Task<bool> Create(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Create(taskDomain);
+            return _taskWriteOnlyRepository.Create(userId, taskDomain);
         }
 
-        public Task<bool> Delete(TaskInput task)
+        public Task<bool> Delete(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Delete(taskDomain);
+            return _taskWriteOnlyRepository.Delete(userId, taskDomain);
         }
 
-        public Task<bool> DeleteById(Guid id)
-        {
-            return _taskWriteOnlyRepository.DeleteById(id);
-        }
-
-        public Task<bool> Update(TaskInput task)
+        public Task<bool> Update(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Update(taskDomain);
+            return _taskWriteOnlyRepository.Update(userId, taskDomain);
         }
 
-        public Task<bool> MarkAsDone(TaskInput task)
+        public Task<bool> MarkAsDone(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.MarkAsDone(taskDomain);
+            return _taskWriteOnlyRepository.MarkAsDone(userId, taskDomain);
         }
 
         internal static Domain.Task.Task GenerateDomainInput(TaskInput task)

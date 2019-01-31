@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="EntityFramework\Context.cs" />
     <Compile Include="InMemory\Context.cs" />
-    <Compile Include="InMemory\Repositories\BaseRepository.cs" />
     <Compile Include="InMemory\Repositories\UserReadOnlyRepository.cs" />
     <Compile Include="InMemory\Repositories\TaskReadOnlyRepository.cs" />
     <Compile Include="InMemory\Repositories\TaskWriteOnlyRepository.cs" />

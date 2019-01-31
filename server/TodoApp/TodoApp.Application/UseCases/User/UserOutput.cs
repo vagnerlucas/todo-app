@@ -11,7 +11,7 @@ namespace TodoApp.Application.UseCases.User
         {
             Id = user.Id;
             Name = user.Name;
-            Tasks = user.Tasks.Select(task => new TaskOutput(task)).ToList();
+            Tasks = user.Tasks?.Select(task => new TaskOutput(task)).ToList();
         }
         public Guid Id { get; }
         public string Name { get; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TodoApp.Application.Repositories.UserRepository;
 
@@ -23,6 +24,8 @@ namespace TodoApp.Application.UseCases.User
         public async Task<UserOutput> GetUser(string name)
         {
             var data = await _userReadOnlyRepository.GetUser(name);
+            if (data == null)
+                throw new UserNotFoundException("Impossible to find user");
             return new UserOutput(data);
         }
 
@@ -30,7 +33,8 @@ namespace TodoApp.Application.UseCases.User
         {
             return new Domain.User.User
             {
-                Name = user.Name
+                Name = user.Name,
+                Tasks = new List<Domain.Task.Task>()
             };
         }
 

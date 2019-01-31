@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using TodoApp.Application.CommonInterfaces;
 
 namespace TodoApp.Application.UseCases.Task
 {
-    public interface ITaskUseCase : IListable<TaskOutput>
+    public interface ITaskUseCase
     {
-        Task<bool> Create(TaskInput task);
-        Task<bool> Delete(TaskInput task);
-        Task<bool> DeleteById(Guid id);
-        Task<bool> Update(TaskInput task);
-        Task<bool> MarkAsDone(TaskInput task);
+        Task<bool> Create(Guid userId, TaskInput task);
+        Task<bool> Delete(Guid userId, TaskInput task);
+        Task<bool> Update(Guid userId, TaskInput task);
+        Task<bool> MarkAsDone(Guid userId, TaskInput task);
+        Task<ICollection<TaskOutput>> ListAll(Guid userId);
     }
 }

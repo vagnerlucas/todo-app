@@ -9,6 +9,6 @@ namespace TodoApp.Domain.User
     {
         public Guid Id { get; set; }
         public Name Name { get; set; }
-        public ICollection<Task.Task> Tasks { get; set; }
+        public ICollection<Task.Task> Tasks { get; set; } = new List<Task.Task>();
     }
 }

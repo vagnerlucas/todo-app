@@ -1,39 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TodoApp.Application;
 using TodoApp.Application.Repositories.TaskRepository;
+using TodoApp.Domain.User;
 using Task = TodoApp.Domain.Task.Task;
 
 namespace TodoApp.Infrastructure.InMemory.Repositories
 {
-    public class TaskWriteOnlyRepository : BaseRepository, ITaskWriteOnlyRepository
+    public class TaskWriteOnlyRepository : ITaskWriteOnlyRepository
     {
-        public Task<bool> Create(Task task)
+        private readonly Context _context;
+
+        public TaskWriteOnlyRepository(Context context)
+        {
+            _context = context;
+        }
+        public Task<bool> Create(Guid userId, Task task)
         {
             task.Id = Guid.NewGuid();
-            _context.Tasks.Add(task);
+            task.CreatedAt = DateTime.Now;
+
+            var existingUser = GetUser(userId);
+
+            existingUser.Tasks.Add(task);
+
             return System.Threading.Tasks.Task.FromResult(true);
         }
 
-        public Task<bool> Delete(Task task)
+        public Task<bool> Delete(Guid userId, Task task)
         {
-            var result = _context.Tasks.Remove(task);
+            var existingUser = GetUser(userId);
+
+            var toRemove = existingUser.Tasks.FirstOrDefault(w => w.Id == task.Id);
+
+            var result = existingUser.Tasks.Remove(toRemove);
+
             return System.Threading.Tasks.Task.FromResult(result);
         }
 
-        public Task<bool> DeleteById(Guid id)
+        public Task<bool> Update(Guid userId, Task task)
         {
-            var task = _context.Tasks.FirstOrDefault(w => w.Id == id);
+            var existingUser = GetUser(userId);
 
-            if (task is null)
-                return System.Threading.Tasks.Task.FromResult(false);
-
-            return Delete(task);
-        }
-
-        public Task<bool> Update(Task task)
-        {
-            var existingTask = _context.Tasks.FirstOrDefault(w => w.Id == task.Id);
+            var existingTask = existingUser.Tasks.FirstOrDefault(w => w.Id == task.Id);
 
             if (existingTask is null)
                 return System.Threading.Tasks.Task.FromResult(false);
@@ -42,16 +53,29 @@ namespace TodoApp.Infrastructure.InMemory.Repositories
             return System.Threading.Tasks.Task.FromResult(true);
         }
 
-        public Task<bool> MarkAsDone(Task task)
+        public Task<bool> MarkAsDone(Guid userId, Task task)
         {
-            var existingTask = _context.Tasks.FirstOrDefault(w => w.Id == task.Id && w.Name.Equals(task.Name));
+            var existingUser = GetUser(userId);
+
+            var existingTask = existingUser.Tasks.FirstOrDefault(w => w.Id == task.Id);
 
             if (existingTask is null)
                 return System.Threading.Tasks.Task.FromResult(false);
 
             existingTask.Done = true;
+            existingTask.DoneAt = DateTime.Now;
 
             return System.Threading.Tasks.Task.FromResult(true);
+        }
+
+        private User GetUser(Guid userId)
+        {
+            var existingUser = _context.Users.FirstOrDefault(user => user.Id == userId);
+
+            if (existingUser is null)
+                throw new UserNotFoundException("User not found");
+
+            return existingUser;
         }
     }
 }
