@@ -7,7 +7,7 @@ namespace TodoApp.Application.UseCases.User
 {
     public struct UserOutput
     {
-        public UserOutput(Domain.User.User user)
+        public UserOutput(in Domain.User.User user)
         {
             Id = user.Id;
             Name = user.Name;

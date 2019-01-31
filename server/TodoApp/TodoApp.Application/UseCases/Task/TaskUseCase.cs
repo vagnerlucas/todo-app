@@ -26,13 +26,13 @@ namespace TodoApp.Application.UseCases.Task
 
         public Task<bool> Create(TaskInput task)
         {
-            var taskDomain = GenerateInput(task);
+            var taskDomain = GenerateDomainInput(task);
             return _taskWriteOnlyRepository.Create(taskDomain);
         }
 
         public Task<bool> Delete(TaskInput task)
         {
-            var taskDomain = GenerateInput(task);
+            var taskDomain = GenerateDomainInput(task);
             return _taskWriteOnlyRepository.Delete(taskDomain);
         }
 
@@ -43,17 +43,17 @@ namespace TodoApp.Application.UseCases.Task
 
         public Task<bool> Update(TaskInput task)
         {
-            var taskDomain = GenerateInput(task);
+            var taskDomain = GenerateDomainInput(task);
             return _taskWriteOnlyRepository.Update(taskDomain);
         }
 
         public Task<bool> MarkAsDone(TaskInput task)
         {
-            var taskDomain = GenerateInput(task);
+            var taskDomain = GenerateDomainInput(task);
             return _taskWriteOnlyRepository.MarkAsDone(taskDomain);
         }
 
-        internal static Domain.Task.Task GenerateInput(TaskInput task)
+        internal static Domain.Task.Task GenerateDomainInput(TaskInput task)
         {
             return new Domain.Task.Task
             {
