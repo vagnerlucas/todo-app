@@ -25,7 +25,7 @@ namespace TodoApp.WebApi.Controllers
 
         protected Guid? GetUserIdFromRequest()
         {
-            var id = Request.Headers.GetValues("id").FirstOrDefault();
+            var id = Request.Headers.GetValues("X-User-Id").FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(id))
                 return null;

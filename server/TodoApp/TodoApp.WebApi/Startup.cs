@@ -5,6 +5,7 @@ using Owin;
 using SimpleInjector;
 using System.Linq;
 using System.Web.Http;
+using Microsoft.Owin.Cors;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 //using TodoApp.Application.CommonInterfaces;
@@ -63,6 +64,8 @@ namespace TodoApp.WebApi
 
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
+
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
     }
 }
