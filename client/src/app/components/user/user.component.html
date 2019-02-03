@@ -1,0 +1,3 @@
+<label *ngIf="hasUserCredentials" class="">Welcome, {{ userName }}</label>
+<br>
+<button *ngIf="!hasUserCredentials" class="btn btn-lg btn-outline-primary" (click)="openModal()">Define username</button>

@@ -7,6 +7,7 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './username.modal.template.html'
 })
 export class UserNameModalContent {
+  title = 'User info';
   
   @Output() $eventEmitter = new EventEmitter();
 

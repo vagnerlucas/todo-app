@@ -36,6 +36,24 @@ namespace TodoApp.WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("info")]
+        public async Task<IHttpActionResult> GetUserInfo()
+        {
+            try
+            {
+                var userId = GetUserIdFromRequest();
+                if (userId == null)
+                    return NotFound();
+                var user = await _userUseCase.GetUser((Guid)userId);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return GetFormattedError("An error has occurred when trying to get user info", e);
+            }
+        }
+
         [HttpPost]
         [Route("create")]
         public async Task<IHttpActionResult> CreateUser([FromBody] UserInput user)

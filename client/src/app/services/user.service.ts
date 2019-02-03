@@ -4,41 +4,40 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../models/user.model';
 import { map } from 'rxjs/operators';
-import { UserNotFoundException } from '../exceptions/user.exception';
+import { UserNotFoundException, UserCreationException } from '../exceptions/user.exception';
 
 @Injectable()
 export class UserService {
 
-    checkLogin : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    checkLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    constructor(private httpService: HttpService) {}
+    constructor(private httpService: HttpService) { }
 
-    public getUser(): Observable<UserModel>
-    {
-        const url = `${environment.apiUrl}/user/`;
+    public checkUser(cb: Function): void {
+        const url = `${environment.apiUrl}/user/info`;
         const result = this.httpService.get<UserModel>(url);
 
         result.subscribe(user => {
             if (user) {
                 this.checkLogin.next(true);
-                return user;
+                cb(user);
             }
-        });
-
-        throw new UserNotFoundException('User not found');
+        }, (e) =>  { throw new UserNotFoundException('User not found'); });
     }
 
-    private registerUser(userId: string) {
+    private registerUser(userId: string): void {
         sessionStorage.setItem('X-User-Id', userId);
     }
 
-    public createUser(user: UserModel) 
-    {
+    public createUser(user: UserModel, cb: Function) : void {
         const url = `${environment.apiUrl}/user/create`;
-        const result = this.httpService.unsecurePost<UserModel>(url, user);
-        result.subscribe(user => {
+
+        var request = this.httpService.unsecurePost<UserModel>(url, user);
+       
+        request.subscribe(user => {
             this.registerUser(user.Id);
             this.checkLogin.next(true);
-        });
+            cb(true);
+        }, (e) => cb(false));
     }
 }

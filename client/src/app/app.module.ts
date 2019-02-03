@@ -13,13 +13,17 @@ import { FilterTaskPipe } from './pipes/filter-task.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserNameModalContent } from './modals/username.modal.content';
 import { UserService } from './services/user.service';
+import { TaskComponent } from './components/task/task.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderByDatePipe,
     FilterTaskPipe,
-    UserNameModalContent
+    UserNameModalContent,
+    TaskComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

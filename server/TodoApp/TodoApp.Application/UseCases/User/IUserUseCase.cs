@@ -7,6 +7,7 @@ namespace TodoApp.Application.UseCases.User
     {
         Task<UserOutput?> CreateUser(UserInput user);
         Task<UserOutput?> GetUser(string name);
+        Task<UserOutput?> GetUser(Guid id);
     }
 
 }

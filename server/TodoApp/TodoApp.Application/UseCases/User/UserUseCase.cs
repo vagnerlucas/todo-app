@@ -31,6 +31,12 @@ namespace TodoApp.Application.UseCases.User
             return new UserOutput(data);
         }
 
+        public async Task<UserOutput?> GetUser(Guid id)
+        {
+            var user = await _userReadOnlyRepository.GetUser(id);
+            return new UserOutput(user);
+        }
+
         private static Domain.User.User GenerateDomainUser(UserInput user)
         {
             return new Domain.User.User
