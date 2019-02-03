@@ -59,9 +59,9 @@ namespace TodoApp.WebApi.Tests
 
             var user = GetNewUser(name);
 
-            var newUserId = await sut.CreateUser(user);
+            var newUser = await sut.CreateUser(user);
 
-            Assert.True(newUserId != null);
+            Assert.True(newUser != null);
         }
     }
 }

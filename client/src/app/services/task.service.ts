@@ -7,11 +7,17 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TaskService {
 
-    constructor(public httpService: HttpService) {}
+    constructor(private httpService: HttpService) {}
 
     public getTasks(): Observable<TaskModel[]>
     {
         const url = `${environment.apiUrl}/tasks`;
         return this.httpService.get<TaskModel[]>(url);
+    }
+
+    public createTask(task: TaskModel)
+    {
+        const url = `${environment.apiUrl}/tasks/create`;
+        return this.httpService.post<TaskModel>(url, task);
     }
 }

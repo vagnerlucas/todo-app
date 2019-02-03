@@ -15,13 +15,15 @@ namespace TodoApp.Application.UseCases.User
             _userReadOnlyRepository = userReadOnlyRepository;
             _userWriteOnlyRepository = userWriteOnlyRepository;
         }
-        public Task<Guid> CreateUser(UserInput user)
+        public async Task<UserOutput?> CreateUser(UserInput user)
         {
             var userDomain = GenerateDomainUser(user);
-            return _userWriteOnlyRepository.CreateUser(userDomain);
+            var id = await _userWriteOnlyRepository.CreateUser(userDomain);
+            userDomain.Id = id;
+            return new UserOutput(userDomain);
         }
 
-        public async Task<UserOutput> GetUser(string name)
+        public async Task<UserOutput?> GetUser(string name)
         {
             var data = await _userReadOnlyRepository.GetUser(name);
             if (data == null)
@@ -29,7 +31,7 @@ namespace TodoApp.Application.UseCases.User
             return new UserOutput(data);
         }
 
-        internal static Domain.User.User GenerateDomainUser(UserInput user)
+        private static Domain.User.User GenerateDomainUser(UserInput user)
         {
             return new Domain.User.User
             {

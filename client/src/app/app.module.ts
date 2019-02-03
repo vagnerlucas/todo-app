@@ -11,14 +11,15 @@ import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http'
 import { OrderByDatePipe } from './pipes/orderby-date.pipe';
 import { FilterTaskPipe } from './pipes/filter-task.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UsernameModal } from './modals/username.modal';
+import { UserNameModalContent } from './modals/username.modal.content';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderByDatePipe,
     FilterTaskPipe,
-    UsernameModal
+    UserNameModalContent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +30,11 @@ import { UsernameModal } from './modals/username.modal';
   ],
   providers: [
     HttpClient,
-    HttpService
+    HttpService,
+    UserService
+  ],
+  entryComponents: [
+    UserNameModalContent
   ],
   bootstrap: [AppComponent]
 })

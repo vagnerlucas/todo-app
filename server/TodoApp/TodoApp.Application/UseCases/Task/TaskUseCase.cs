@@ -23,10 +23,11 @@ namespace TodoApp.Application.UseCases.Task
             return data.Select(task => new TaskOutput(task)).ToList();
         }
 
-        public Task<bool> Create(Guid userId, TaskInput task)
+        public async Task<TaskOutput> Create(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Create(userId, taskDomain);
+            var createdTask = await _taskWriteOnlyRepository.Create(userId, taskDomain);
+            return new TaskOutput(createdTask);
         }
 
         public Task<bool> Delete(Guid userId, TaskInput task)
@@ -35,10 +36,11 @@ namespace TodoApp.Application.UseCases.Task
             return _taskWriteOnlyRepository.Delete(userId, taskDomain);
         }
 
-        public Task<bool> Update(Guid userId, TaskInput task)
+        public async Task<TaskOutput> Update(Guid userId, TaskInput task)
         {
             var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Update(userId, taskDomain);
+            var updatedTask = await _taskWriteOnlyRepository.Update(userId, taskDomain);
+            return new TaskOutput(updatedTask);
         }
 
         public Task<bool> MarkAsDone(Guid userId, TaskInput task)

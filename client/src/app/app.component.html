@@ -12,6 +12,7 @@
     <i class="fa fa-google" aria-hidden="true"></i>
     Logout
   </button> -->
+    <button *ngIf="!hasUserCredentials" class="btn btn-lg btn-outline-primary" (click)="openModal()">Define username</button>
 
     <input [(ngModel)]="Name" type="text" placeholder="add or search for a task..." class="main-search" (keyup.enter)="addTask(Name);Name=''" />
 
@@ -25,7 +26,8 @@
                         <div class="events">
                             <div class="pull-left">
                                 <div class="campo">
-                                    <input type="checkbox" [checked]="task.Done" name="campo-checkbox" id="{{task.Id}}" (click)="toggleDoneUnDone(task)" />
+                                    <input type="checkbox" [checked]="task.Done" name="campo-checkbox" id="{{task.Id}}"
+                                        (click)="toggleDoneUnDone(task)" />
                                     <label for="{{task.Id}}"></label>
                                 </div>
                             </div>
@@ -47,5 +49,3 @@
     </div>
 
 </div>
-
-<username-modal></username-modal>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TodoApp.Application;
 using TodoApp.Application.Repositories.UserRepository;
@@ -17,6 +18,15 @@ namespace TodoApp.Infrastructure.InMemory.Repositories
         public Task<User> GetUser(string name)
         {
             var user = _context.Users.FirstOrDefault(w => w.Name.ToString().ToUpperInvariant() == name.ToUpperInvariant().Trim());
+            if (user == null)
+                throw new UserNotFoundException("User not found");
+
+            return Task.FromResult(user);
+        }
+
+        public Task<User> GetUser(Guid id)
+        {
+            var user = _context.Users.FirstOrDefault(w => w.Id == id);
             if (user == null)
                 throw new UserNotFoundException("User not found");
 

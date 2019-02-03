@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TodoApp.Application.UseCases.Task;
@@ -47,7 +48,7 @@ namespace TodoApp.WebApi.Controllers
                     return BadRequest("Invalid operation");
 
                 var data = await _taskUseCase.Create((Guid)userId, task);
-                return Ok(data);
+                return Created($"/tasks/{data.Id}", data);
             }
             catch (Exception e)
             {
@@ -66,8 +67,8 @@ namespace TodoApp.WebApi.Controllers
                 if (userId == null)
                     return BadRequest("Invalid operation");
 
-                var data = await _taskUseCase.Update((Guid)userId, task);
-                return Ok(data);
+                await _taskUseCase.Update((Guid)userId, task);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception e)
             {
@@ -86,8 +87,8 @@ namespace TodoApp.WebApi.Controllers
                 if (userId == null)
                     return BadRequest("Invalid operation");
 
-                var data = await _taskUseCase.Delete((Guid)userId, task);
-                return Ok(data);
+                await _taskUseCase.Delete((Guid)userId, task);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception e)
             {
@@ -107,7 +108,7 @@ namespace TodoApp.WebApi.Controllers
                     return BadRequest("Invalid operation");
 
                 var data = await _taskUseCase.MarkAsDone((Guid)userId, task);
-                return Ok(data);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception e)
             {

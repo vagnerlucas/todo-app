@@ -42,8 +42,8 @@ namespace TodoApp.WebApi.Controllers
         {
             try
             {
-                var id = await _userUseCase.CreateUser(user);
-                return Ok(id);
+                var createdUser = await _userUseCase.CreateUser(user);
+                return Created($"/user/{createdUser?.Id}", createdUser);
             }
             catch (Exception e)
             {
