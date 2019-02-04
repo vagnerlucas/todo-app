@@ -20,8 +20,8 @@ export class TaskService {
     }
 
     public remove(task: TaskModel) {
-        const url = `${environment.apiUrl}/tasks/delete`;
-        return this.httpService.post<TaskModel>(url, task);
+        const url = `${environment.apiUrl}/tasks/delete/${task.Id}`;
+        return this.httpService.delete<TaskModel>(url);
     }
 
     public markAsDone(task: TaskModel) {

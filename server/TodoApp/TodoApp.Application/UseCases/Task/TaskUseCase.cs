@@ -30,10 +30,9 @@ namespace TodoApp.Application.UseCases.Task
             return new TaskOutput(createdTask);
         }
 
-        public Task<bool> Delete(Guid userId, TaskInput task)
+        public Task<bool> Delete(Guid userId, Guid taskId)
         {
-            var taskDomain = GenerateDomainInput(task);
-            return _taskWriteOnlyRepository.Delete(userId, taskDomain);
+            return _taskWriteOnlyRepository.Delete(userId, taskId);
         }
 
         public async Task<TaskOutput> Update(Guid userId, TaskInput task)

@@ -35,11 +35,11 @@ namespace TodoApp.Infrastructure.InMemory.Repositories
             return task;
         }
 
-        public async Task<bool> Delete(Guid userId, Task task)
+        public async Task<bool> Delete(Guid userId, Guid taskId)
         {
             var existingUser = await GetUserById(userId);
 
-            var toRemove = existingUser.Tasks.FirstOrDefault(w => w.Id == task.Id);
+            var toRemove = existingUser.Tasks.FirstOrDefault(w => w.Id == taskId);
 
             var result = existingUser.Tasks.Remove(toRemove);
 

@@ -55,7 +55,10 @@ export class UserComponent implements OnInit  {
     const modalRef = this.modalService.open(UserNameModalContent);
     if (title && title !== '')
       modalRef.componentInstance.title = title;
-    modalRef.result.then(result => this.createUser(result));
+
+    modalRef.result.then(result => {
+      if (result) this.createUser(result)
+    }, (e) => {});
   }
 
   logout() {

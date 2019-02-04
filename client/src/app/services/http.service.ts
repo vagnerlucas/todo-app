@@ -15,7 +15,6 @@ export class HttpService {
         
         try {
             const id = sessionStorage.getItem('X-User-Id');
-            console.log(id.toString())
             const headers = new HttpHeaders({
                 'Content-Type': 'application/json',
                 'X-User-Id': id.toString()
@@ -35,11 +34,11 @@ export class HttpService {
                         .pipe(map(res => res));
     }
 
-    // public delete<T>(url: string, model: T) : Observable<T> {
-    //     const options = this.getOptions();
-    //     return this.http.delete<T>(url, model)
-    //                .pipe(map(res => res))
-    // }
+    public delete<T>(url: string) : Observable<T> {
+        const options = this.getOptions();
+        return this.http.delete<T>(url, options)
+                   .pipe(map(res => res))
+    }
 
     public post<T>(url: string, model: T) : Observable<T>
     {
