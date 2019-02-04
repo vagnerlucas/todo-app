@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:44209/todo-app'
+  apiUrl: 'http://localhost:44209/todo-app',
+  hubUrl: 'http://localhost:44209/'
 };
 
 /*

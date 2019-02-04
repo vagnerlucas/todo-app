@@ -13,8 +13,15 @@ import { FilterTaskPipe } from './pipes/filter-task.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserNameModalContent } from './modals/username.modal.content';
 import { UserService } from './services/user.service';
+import { SocketService } from './services/socket.service';
+
 import { TaskComponent } from './components/task/task.component';
 import { UserComponent } from './components/user/user.component';
+
+import { SignalRModule } from 'ng2-signalr';
+import { SignalRConfiguration } from 'ng2-signalr';
+import { environment } from 'src/environments/environment';
+import { JokeComponent } from './components/joke/joke.component';
 
 @NgModule({
   declarations: [
@@ -23,23 +30,34 @@ import { UserComponent } from './components/user/user.component';
     FilterTaskPipe,
     UserNameModalContent,
     TaskComponent,
-    UserComponent
+    UserComponent,
+    JokeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    SignalRModule.forRoot(createConfig)
   ],
   providers: [
     HttpClient,
     HttpService,
-    UserService
+    UserService,
+    SocketService
   ],
   entryComponents: [
     UserNameModalContent
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function createConfig(): SignalRConfiguration {
+  const c = new SignalRConfiguration();
+  c.url = `${environment.hubUrl}/r`;
+  c.hubName = "TodoAppHub";
+  return c;
+}

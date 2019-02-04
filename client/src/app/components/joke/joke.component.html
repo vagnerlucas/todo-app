@@ -1,0 +1,3 @@
+<p class="joke" *ngIf="joke" (click)="visible=false">
+    <img src="{{joke.IconUrl}}" /> {{ joke.Text || 'That\'s not funny...' }}
+</p>
