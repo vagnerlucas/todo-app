@@ -19,18 +19,26 @@ using TodoApp.WebApi.Hub;
 
 namespace TodoApp.WebApi
 {
+    /// <summary>
+    /// Application startup class
+    /// </summary>
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
+            //Repository to consider
             const string DB_REPOSITORY_NAMESPACE = "TodoApp.Infrastructure.InMemory.Repositories";
 
+            //DI container
             var container = new Container();
 
+            //Registering all controllers
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 
+            //Getting Application assembly
             var applicationAssembly = typeof(TodoApp.Application.ApplicationException).Assembly;
 
+            //Registering Application interfaces
             var registrations =
                 from type in applicationAssembly.GetExportedTypes()
                 where type.GetInterfaces().Any() && !type.Name.Contains("Exception")
@@ -41,8 +49,10 @@ namespace TodoApp.WebApi
                 container.Register(reg.Service, reg.Implementation, Lifestyle.Transient);
             }
 
+            //Getting Repository assembly
             var repositoryAssembly = typeof(TodoApp.Infrastructure.ReferenceType).Assembly;
 
+            //Registering Repository interfaces
             registrations =
                 from type in repositoryAssembly.GetExportedTypes()
                 where type.Namespace == DB_REPOSITORY_NAMESPACE
@@ -68,6 +78,7 @@ namespace TodoApp.WebApi
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
 
+            //Registering SignalR socket service
             var signalRResolver = new SimpleInjectorSignalRDependencyResolver(container);
 
             IJokeFetcher jokeFetcher = new JokeFetcher();
@@ -85,6 +96,7 @@ namespace TodoApp.WebApi
 
             GlobalHost.DependencyResolver = signalRResolver;
 
+            //Configuring cors
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
     }

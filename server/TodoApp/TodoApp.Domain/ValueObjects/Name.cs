@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TodoApp.Domain.ValueObjects
 {
+    /// <summary>
+    /// Name value object
+    /// </summary>
     public class Name
     {
         private string _text;

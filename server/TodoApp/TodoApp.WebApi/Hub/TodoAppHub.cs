@@ -9,6 +9,9 @@ using TodoApp.Application.UseCases.Joke;
 
 namespace TodoApp.WebApi.Hub
 {
+    /// <summary>
+    /// Socket service for the TodoApp
+    /// </summary>
     [HubName("TodoAppHub")]
     public class TodoAppHub : Microsoft.AspNet.SignalR.Hub
     {
@@ -20,6 +23,10 @@ namespace TodoApp.WebApi.Hub
             Task.Run(DisplayRandomJoke);
         }
 
+        /// <summary>
+        /// Fetch random joke and send to the hub client
+        /// </summary>
+        /// <returns>Task</returns>
         private async Task DisplayRandomJoke()
         {
             while (true)
