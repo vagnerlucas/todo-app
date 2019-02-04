@@ -1,17 +1,17 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title || 'User info'}}</h4>
+    <h4 class="modal-title text-info" id="modal-basic-title">{{title || 'User info'}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
     <div class="form-group">
-        <label for="Name">Username</label>
+        <label for="name"><b>Set your username</b></label>
         <div class="input-group">
-            <input [(ngModel)]="Name" type="text" placeholder="user" class="main-search" (keyup.enter)="activeModal.close(Name)" />
+            <input [(ngModel)]="name" type="text" placeholder="user" class="main-search form-control" (keyup.enter)="activeModal.close(name)" />
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="activeModal.close(Name)">Submit</button>
+    <button type="button" class="btn btn-info" (click)="activeModal.close(name)">Submit</button>
 </div>

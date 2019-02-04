@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserNameModalContent } from 'src/app/modals/username.modal.content';
@@ -12,7 +12,7 @@ import { UserNotFoundException } from 'src/app/exceptions/user.exception';
   styleUrls: ['./user.component.css']
 })
 
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit  {
 
   userName: string;
   user: Observable<UserModel>;
@@ -30,8 +30,9 @@ export class UserComponent implements OnInit {
         }
       }); 
     } catch (error) {
-      if (error instanceof UserNotFoundException)
-        this.openModal(null);
+       if (error instanceof UserNotFoundException) {
+         setTimeout(() => this.openModal('User Info'), 0);
+       }
     }
   }
 
@@ -55,6 +56,10 @@ export class UserComponent implements OnInit {
     if (title && title !== '')
       modalRef.componentInstance.title = title;
     modalRef.result.then(result => this.createUser(result));
+  }
+
+  logout() {
+    this.userService.logout();
   }
 
 }

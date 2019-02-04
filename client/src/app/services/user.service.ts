@@ -29,6 +29,11 @@ export class UserService {
         sessionStorage.setItem('X-User-Id', userId);
     }
 
+    public logout() : void {
+        sessionStorage.clear();
+        this.checkLogin.next(false);
+    }
+
     public createUser(user: UserModel, cb: Function) : void {
         const url = `${environment.apiUrl}/user/create`;
 

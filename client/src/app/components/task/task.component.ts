@@ -22,6 +22,9 @@ export class TaskComponent implements OnInit {
   
   toggleDoneUnDone(task: TaskModel) {
     task.Done = !task.Done;
+    this.taskService.markAsDone(task).subscribe(_ => {
+      this.tasks = this.taskService.getTasks();
+    });
   }
 
   addTask(desc: string) {
@@ -35,6 +38,8 @@ export class TaskComponent implements OnInit {
   }
 
   removeTask(task: TaskModel) {
-
+    this.taskService.remove(task).subscribe(_ => {
+      this.tasks = this.taskService.getTasks();
+    });
   }
 }

@@ -76,6 +76,7 @@ namespace TodoApp.WebApi.Controllers
             }
         }
 
+        //[HttpDelete]
         [HttpPost]
         [Route("delete")]
         public async Task<IHttpActionResult> DeleteTask([FromBody] TaskInput task)
@@ -107,7 +108,7 @@ namespace TodoApp.WebApi.Controllers
                 if (userId == null)
                     return BadRequest("Invalid operation");
 
-                var data = await _taskUseCase.MarkAsDone((Guid)userId, task);
+                await _taskUseCase.MarkAsDone((Guid)userId, task);
                 return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception e)

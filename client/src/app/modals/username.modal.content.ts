@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -6,10 +6,16 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   selector: 'username-modal',
   templateUrl: './username.modal.template.html'
 })
-export class UserNameModalContent {
+
+export class UserNameModalContent implements OnInit {
+
   title = 'User info';
-  
-  @Output() $eventEmitter = new EventEmitter();
+  name: string;
 
   constructor(private activeModal: NgbActiveModal) {}
+  
+  ngOnInit(): void {
+    this.name = '';
+  }
+
 }

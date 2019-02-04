@@ -9,15 +9,23 @@ export class TaskService {
 
     constructor(private httpService: HttpService) {}
 
-    public getTasks(): Observable<TaskModel[]>
-    {
+    public getTasks(): Observable<TaskModel[]> {
         const url = `${environment.apiUrl}/tasks`;
         return this.httpService.get<TaskModel[]>(url);
     }
 
-    public createTask(task: TaskModel)
-    {
+    public createTask(task: TaskModel) {
         const url = `${environment.apiUrl}/tasks/create`;
+        return this.httpService.post<TaskModel>(url, task);
+    }
+
+    public remove(task: TaskModel) {
+        const url = `${environment.apiUrl}/tasks/delete`;
+        return this.httpService.post<TaskModel>(url, task);
+    }
+
+    public markAsDone(task: TaskModel) {
+        const url = `${environment.apiUrl}/tasks/done`;
         return this.httpService.post<TaskModel>(url, task);
     }
 }

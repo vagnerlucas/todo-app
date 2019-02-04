@@ -1,3 +1,8 @@
-<label *ngIf="hasUserCredentials" class="">Welcome, {{ userName }}</label>
+<h3 class="float-left" *ngIf="hasUserCredentials">Welcome, <span class="text-info">{{ userName }}</span></h3>
+<button class="btn btn-danger float-right btn-quit" *ngIf="hasUserCredentials" (click)="logout()">logout</button>
 <br>
-<button *ngIf="!hasUserCredentials" class="btn btn-lg btn-outline-primary" (click)="openModal()">Define username</button>
+<div *ngIf="!hasUserCredentials">
+    <h3 class="float-left">Hello there, you need to</h3><button class="btn btn-info btn-outline-primary float-left btn-login" (click)="openModal(null)">set your username</button>
+</div>
+<br>
+<app-task *ngIf="hasUserCredentials"></app-task>
