@@ -11,6 +11,7 @@ import { TaskModel } from 'src/app/models/task.model';
 export class TaskComponent implements OnInit {
 
   tasks: Observable<TaskModel[]>;
+  name: string
 
   constructor(private taskService: TaskService) { }
 

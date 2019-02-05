@@ -12,7 +12,7 @@ export class UserNameModalContent implements OnInit {
   title = 'User info';
   name: string;
 
-  constructor(private activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal) {}
   
   ngOnInit(): void {
     this.name = '';

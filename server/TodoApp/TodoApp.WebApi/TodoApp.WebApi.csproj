@@ -137,6 +137,8 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\vagnerlucas-app - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\vagnerlucas-app - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
