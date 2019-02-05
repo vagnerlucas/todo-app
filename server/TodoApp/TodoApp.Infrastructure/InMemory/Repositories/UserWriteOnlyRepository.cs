@@ -25,5 +25,14 @@ namespace TodoApp.Infrastructure.InMemory.Repositories
 
             return Task.FromResult(user.Id);
         }
+
+        public Task RemoveUserById(Guid userId)
+        {
+            var user = _context.Users.FirstOrDefault(w => w.Id == userId);
+            if (user != null)
+                _context.Users.Remove(user);
+
+            return Task.CompletedTask;
+        }
     }
 }

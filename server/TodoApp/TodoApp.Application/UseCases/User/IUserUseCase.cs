@@ -26,6 +26,13 @@ namespace TodoApp.Application.UseCases.User
         /// <param name="id">User Id</param>
         /// <returns>Application user</returns>
         Task<UserOutput?> GetUser(Guid id);
+
+        /// <summary>
+        /// Removes an user from application
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <returns>Task</returns>
+        System.Threading.Tasks.Task RemoveUserById(Guid userId);
     }
 
 }

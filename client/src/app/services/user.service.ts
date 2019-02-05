@@ -30,8 +30,11 @@ export class UserService {
     }
 
     public logout() : void {
-        sessionStorage.clear();
-        this.checkLogin.next(false);
+        const url = `${environment.apiUrl}/user/logout`;
+        this.httpService.post(url, null).subscribe(_ => {
+            sessionStorage.clear();
+            this.checkLogin.next(false);
+        })
     }
 
     public createUser(user: UserModel, cb: Function) : void {

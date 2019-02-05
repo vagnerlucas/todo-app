@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
 
 @Component({
@@ -10,21 +10,25 @@ import { TaskModel } from 'src/app/models/task.model';
 })
 export class TaskComponent implements OnInit {
 
-  tasks: Observable<TaskModel[]>;
+  tasks = new Subject<TaskModel[]>();
   name: string
 
   constructor(private taskService: TaskService) { }
 
+  private updateTaskList = (tasks) => this.tasks.next(tasks);
+
   ngOnInit() {
     try {
-      this.tasks = this.taskService.getTasks();
+      this.taskService.getTasks()
+                      .subscribe(this.updateTaskList);
     } catch (error) { }
   }
   
   toggleDoneUnDone(task: TaskModel) {
     task.Done = !task.Done;
     this.taskService.markAsDone(task).subscribe(_ => {
-      this.tasks = this.taskService.getTasks();
+      this.taskService.getTasks()
+                      .subscribe(this.updateTaskList)
     });
   }
 
@@ -34,13 +38,15 @@ export class TaskComponent implements OnInit {
       task.Name = desc;
       this.taskService
         .createTask(task)
-        .subscribe(task => this.tasks = this.taskService.getTasks());
+        .subscribe(task => this.taskService.getTasks()
+                                           .subscribe(this.updateTaskList));
     }
   }
 
   removeTask(task: TaskModel) {
     this.taskService.remove(task).subscribe(_ => {
-      this.tasks = this.taskService.getTasks();
+      this.taskService.getTasks()
+                      .subscribe(this.updateTaskList);
     });
   }
 }

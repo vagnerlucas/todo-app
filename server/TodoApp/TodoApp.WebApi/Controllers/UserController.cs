@@ -90,5 +90,28 @@ namespace TodoApp.WebApi.Controllers
                 return GetFormattedError("Could not create user", e);
             }
         }
+
+        /// <summary>
+        /// Removes the user from the application
+        /// </summary>
+        /// <param name="user">User model</param>
+        /// <returns>No content</returns>
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IHttpActionResult> RemoveUser()
+        {
+            try
+            {
+                var userId = GetUserIdFromRequest();
+                await _userUseCase.RemoveUserById((Guid)userId);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                // returns a 500 error
+                return GetFormattedError("Could not create user", e);
+            }
+        }
+
     }
 }

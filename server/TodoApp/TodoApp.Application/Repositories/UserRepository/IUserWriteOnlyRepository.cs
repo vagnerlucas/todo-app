@@ -15,5 +15,12 @@ namespace TodoApp.Application.Repositories.UserRepository
         /// <param name="user">User model</param>
         /// <returns>Id of the created user</returns>
         Task<Guid> CreateUser(User user);
+
+        /// <summary>
+        /// Removes an user from application
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <returns>Task</returns>
+        Task RemoveUserById(Guid userId);
     }
 }

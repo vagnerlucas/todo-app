@@ -37,6 +37,11 @@ namespace TodoApp.Application.UseCases.User
             return new UserOutput(user);
         }
 
+        public System.Threading.Tasks.Task RemoveUserById(Guid userId)
+        {
+            return _userWriteOnlyRepository.RemoveUserById(userId);
+        }
+
         private static Domain.User.User GenerateDomainUser(UserInput user)
         {
             return new Domain.User.User
