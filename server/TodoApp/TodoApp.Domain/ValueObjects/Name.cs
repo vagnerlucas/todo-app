@@ -15,7 +15,7 @@ namespace TodoApp.Domain.ValueObjects
         public Name(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
-                throw new InvalidValueException("O objeto precisa ter um nome");
+                throw new InvalidValueException("The object needs a name");
 
             _text = text;
         }
